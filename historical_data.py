@@ -327,3 +327,49 @@ CLEAN_MATCHES = [
 ]
 
 ALL_HISTORICAL = CONFIRMED_INCIDENTS + CLEAN_MATCHES
+
+
+def augment_incidents(incidents: list[dict], n_per: int = 5, seed: int = 42) -> list[dict]:
+    """
+    Generate synthetic variants of confirmed incidents for richer evaluation.
+
+    Adds proportional Gaussian noise to spread features and absolute noise
+    to probability features (renormalized to sum to 1). Augmented matches
+    preserve the statistical signature of their source incident — high
+    spread, realistic probabilities — while varying in exact values.
+
+    Use for evaluation metric stability only (more positive examples →
+    more stable AP / NDCG estimates). The model always trains on the same
+    data it scores; labels are never used during training.
+
+    Args:
+        incidents: list of match dicts (typically CONFIRMED_INCIDENTS)
+        n_per:     synthetic variants to generate per incident
+        seed:      RNG seed for reproducibility
+    """
+    rng = np.random.default_rng(seed)
+    augmented = []
+    for inc in incidents:
+        for j in range(n_per):
+            v = dict(inc)
+            v["id"]    = f"{inc['id']}_aug{j}"
+            v["match"] = f"{inc['match']} [aug{j + 1}]"
+
+            # Spread: 20% relative std dev + hard floor so values stay positive
+            for key in ("spread_home", "spread_draw", "spread_away"):
+                scale = max(inc[key] * 0.20, 0.003)
+                v[key] = float(np.clip(rng.normal(inc[key], scale), 0.003, 0.15))
+
+            # Probabilities: absolute noise, clipped, then renormalized to sum to 1
+            noise = rng.normal(0, 0.04, 3)
+            probs = np.clip(
+                [inc["prob_home"] + noise[0],
+                 inc["prob_draw"] + noise[1],
+                 inc["prob_away"] + noise[2]],
+                0.05, 0.85,
+            )
+            probs = probs / probs.sum()
+            v["prob_home"], v["prob_draw"], v["prob_away"] = map(float, probs)
+
+            augmented.append(v)
+    return augmented
