@@ -162,7 +162,7 @@ def run_anomaly_detection(matches: list[NormalizedMatch]) -> list[NormalizedMatc
     ])
 
     clf = IsolationForest(
-        contamination=0.15,   # assume ~15% of matches may be suspicious
+        contamination=0.02,   # flag only the top ~2% as genuine outliers
         random_state=42,
         n_estimators=100,
     )
@@ -185,8 +185,8 @@ def run_anomaly_detection(matches: list[NormalizedMatch]) -> list[NormalizedMatc
 
 # ── Stage 3: Classification & flagging ────────────────────────────────────────
 THRESHOLDS = {
-    "high_spread":      0.03,   # >3% std dev across bookmakers = unusual
-    "extreme_favorite": 0.80,   # >80% implied prob = very lopsided
+    "high_spread":      0.05,   # >5% std dev across bookmakers — normal variance sits well below this
+    "extreme_favorite": 0.85,   # >85% implied prob — genuinely lopsided, not just a strong favourite
     "low_bookmakers":   3,      # fewer books = less market scrutiny
 }
 
@@ -200,9 +200,9 @@ def classify_and_flag(matches: list[NormalizedMatch]) -> list[NormalizedMatch]:
             flags.append("EXTREME_FAVORITE")
         if m.bookmaker_count < THRESHOLDS["low_bookmakers"]:
             flags.append("LOW_MARKET_COVERAGE")
-        if m.max_prob_home - m.min_prob_home > 0.10:
+        if m.max_prob_home - m.min_prob_home > 0.15:
             flags.append("LARGE_HOME_LINE_RANGE")
-        if m.max_prob_away - m.min_prob_away > 0.10:
+        if m.max_prob_away - m.min_prob_away > 0.15:
             flags.append("LARGE_AWAY_LINE_RANGE")
         m.flags = ", ".join(flags) if flags else "NONE"
     return matches
