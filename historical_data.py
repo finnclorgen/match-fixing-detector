@@ -7,10 +7,16 @@ combined with synthetic odds signatures that reflect known fixing patterns.
 Sources:
 - Wikipedia: List of match-fixing incidents
 - Europol Operation VETO (2013)
-- Bundesliga Hoyzer scandal (2004-2005)
-- Italian Calciopoli (2006)
-- K-League scandal (2011)
-- Brazilian referee scandal (2005)
+- Bochum District Court (2011) — Ante Sapina / Marijo Cvrtak conviction
+- Bundesliga Hoyzer scandal (2004-2005) — German court conviction 2006
+- Italian Calciopoli (2006) — Italian federal court
+- Italian Totonero (1980) — FIGC sports tribunal
+- Italian Calcioscommesse (2011-12) — Cremona prosecutor
+- K-League scandal (2011) — criminal convictions, lifetime bans
+- Brazilian referee scandal (2005) — Brazilian FA
+- Turkish Fenerbahce scandal (2011) — UEFA sanction
+- Wilson Raj Perumal: Lapland District Court (Finland, 2011); FIFA investigation
+- Norwegian Euro qualifying 2007 — Bochum conviction; UEFA/CAS (Kevin Sammut)
 
 Each incident includes:
 - Metadata (league, year, type of fix, outcome)
@@ -243,6 +249,201 @@ CONFIRMED_INCIDENTS = [
         "spread_away": 0.047,
         "bookmaker_count": 7,
         "notes": "Fenerbahce were heavy favourites legitimately, but fix ensured result. Spread elevated for a dominant home favourite.",
+    },
+
+    # ── Bochum Prosecution / Operation VETO — Sapina & Cvrtak (2009-11) ─────
+    # Ante Sapina and Marijo Cvrtak convicted by Bochum District Court May 2011,
+    # sentenced to 5.5 years each. 22+ counts of fraud and attempted fraud.
+    # These are UEFA Champions League and World Cup qualifying matches —
+    # the highest-profile confirmed fixed matches in European history.
+    {
+        "id": "sapina_001",
+        "match": "Liechtenstein vs Finland",
+        "league": "2010 FIFA World Cup Qualifying (UEFA Group 4)",
+        "season": "2009-10",
+        "year": 2009,
+        "confirmed_fixed": True,
+        "fix_type": "referee",
+        "outcome": "draw",   # 1-1; both goals second half as contracted
+        "source": "Bochum District Court conviction May 2011; referee Novo Panic banned for life by UEFA",
+        "prob_home": 0.08,   # Liechtenstein: tiny nation, massive underdog
+        "prob_draw": 0.17,
+        "prob_away": 0.75,   # Finland heavy favourite
+        "spread_home": 0.042,
+        "spread_draw": 0.063,  # draw spread very high — sharp late money on draw
+        "spread_away": 0.055,
+        "bookmaker_count": 6,
+        "notes": "Referee Novo Panic paid €40,000 to ensure two second-half goals (1-1). Both goals scored in second half as arranged. Sapina named in conviction. WC qualifying match flagged by Sportradar.",
+    },
+    {
+        "id": "sapina_002",
+        "match": "Debrecen vs Fiorentina",
+        "league": "UEFA Champions League Group Stage",
+        "season": "2009-10",
+        "year": 2009,
+        "confirmed_fixed": True,
+        "fix_type": "result",
+        "outcome": "away_win",   # Fiorentina won 4-3; Debrecen scored 3 second-half goals as arranged
+        "source": "Bochum District Court conviction May 2011; Sapina guilty plea",
+        "prob_home": 0.27,   # Debrecen (Hungarian side) considerable underdogs in UCL
+        "prob_draw": 0.22,
+        "prob_away": 0.51,   # Fiorentina (Serie A) favourites
+        "spread_home": 0.049,
+        "spread_draw": 0.031,
+        "spread_away": 0.043,
+        "bookmaker_count": 14,   # UCL match — wide bookmaker coverage
+        "notes": "Fix targeted second-half scoreline for over/scoreline betting markets. Fiorentina led 4-0 at half-time; Debrecen scored three second-half goals as contracted. Named in Sapina's confession to Bochum prosecutors.",
+    },
+    {
+        "id": "sapina_003",
+        "match": "Norway vs Malta",
+        "league": "UEFA Euro 2008 Qualifying (Group A)",
+        "season": "2006-07",
+        "year": 2007,
+        "confirmed_fixed": True,
+        "fix_type": "result",
+        "outcome": "home_win",   # Norway 4-0; three late goals inflated margin for handicap betting
+        "source": "Bochum District Court conviction (Cvrtak, 26 counts); CAS upheld UEFA 10-year ban on Kevin Sammut Aug 2012",
+        "prob_home": 0.73,   # Norway strong favourites at home vs Malta
+        "prob_draw": 0.17,
+        "prob_away": 0.10,
+        "spread_home": 0.064,
+        "spread_draw": 0.038,
+        "spread_away": 0.057,
+        "bookmaker_count": 7,
+        "notes": "Cvrtak met Malta players in Oslo hotel pre-match; €200,000 wagered. Three late goals inflated margin consistent with Asian handicap fix. Malta midfielder Kevin Sammut received €6,000 bribe; 10-year UEFA ban upheld by CAS. Norway win was legitimate favourite; fix was on goal margin.",
+    },
+
+    # ── Hoyzer Scandal — Additional Confirmed Matches (2004) ─────────────────
+    # DFB ordered a replay of LR Ahlen vs Burghausen — the highest DFB evidentiary
+    # threshold, indicating a fully confirmed manipulation. Same Sapina/Hoyzer syndicate.
+    {
+        "id": "hoyzer_003",
+        "match": "LR Ahlen vs SV Wacker Burghausen",
+        "league": "2. Bundesliga",
+        "season": "2004-05",
+        "year": 2004,
+        "confirmed_fixed": True,
+        "fix_type": "referee",
+        "outcome": "home_win",   # Ahlen 1-0; replay ordered (Burghausen won replay 3-1)
+        "source": "German court conviction 2006; DFB ordered replay 27 April 2005",
+        "prob_home": 0.38,
+        "prob_draw": 0.29,
+        "prob_away": 0.33,   # Roughly even match
+        "spread_home": 0.056,
+        "spread_draw": 0.027,
+        "spread_away": 0.049,
+        "bookmaker_count": 5,
+        "notes": "Hoyzer awarded Ahlen a questionable penalty. DFB ordered replay, the strongest possible confirmation that manipulation was proven. Burghausen won the replay 3-1. Same Sapina–Hoyzer syndicate as Paderborn/Hamburg.",
+    },
+
+    # ── Wilson Raj Perumal Fixes (2010) ──────────────────────────────────────
+    # Perumal convicted by Lapland District Court (Finland) Jul 2011, upheld by
+    # Court of Appeal. FIFA confirmed two specific international friendlies.
+    {
+        "id": "perumal_001",
+        "match": "South Africa vs Guatemala",
+        "league": "International Friendly (pre-2010 World Cup)",
+        "season": "2010",
+        "year": 2010,
+        "confirmed_fixed": True,
+        "fix_type": "referee",
+        "outcome": "home_win",   # South Africa won 5-0; three penalties awarded, two appeared incorrect
+        "source": "FIFA investigation; referee Ibrahim Chaibou (Niger) banned; Perumal admitted arranging referee via Football4U International",
+        "prob_home": 0.60,   # South Africa (WC hosts) vs Guatemala
+        "prob_draw": 0.23,
+        "prob_away": 0.17,
+        "spread_home": 0.057,
+        "spread_draw": 0.027,
+        "spread_away": 0.050,
+        "bookmaker_count": 4,   # Friendly — limited coverage
+        "notes": "FIFA concluded match 'manipulated for betting fraud purposes'. Referee Chaibou awarded three penalties, two of which appeared incorrect. Perumal's company Football4U arranged the referee appointment. Score 5-0 was exaggerated by the fix.",
+    },
+    {
+        "id": "perumal_002",
+        "match": "Bahrain vs Togo",
+        "league": "International Friendly",
+        "season": "2010",
+        "year": 2010,
+        "confirmed_fixed": True,
+        "fix_type": "result",
+        "outcome": "home_win",   # 3-0 Bahrain; 'Togo' team was entirely impostors
+        "source": "FIFA confirmed; Togo Football Federation confirmed players were impostors; Bahrain FA confirmed Perumal's company Football4U organised the match",
+        "prob_home": 0.44,   # Bahrain vs Togo — relatively even pre-match
+        "prob_draw": 0.29,
+        "prob_away": 0.27,
+        "spread_home": 0.069,
+        "spread_draw": 0.044,
+        "spread_away": 0.073,   # Extreme spread — market uncertainty about actual participants
+        "bookmaker_count": 3,
+        "notes": "Real Togo squad was on a bus returning from Botswana at kickoff. Perumal fielded 11 impostors; result (Bahrain 3-0) and goals manipulated for Asian betting markets. 5 additional goals were ruled offside. Unique case: fix achieved by substituting an entire national team. Togo FA president confirmed players were 'completely fake'.",
+    },
+
+    # ── Italian Totonero (1980) ───────────────────────────────────────────────
+    # Players bribed by Alvaro Trinca's betting syndicate. FIGC sports tribunal
+    # imposed bans and relegated AC Milan and Lazio. Key confirmed match:
+    {
+        "id": "totonero_001",
+        "match": "AC Milan vs Lazio",
+        "league": "Serie A",
+        "season": "1979-80",
+        "year": 1980,
+        "confirmed_fixed": True,
+        "fix_type": "result",
+        "outcome": "home_win",   # AC Milan won 2-1
+        "source": "FIGC sports tribunal; AC Milan and Lazio relegated to Serie B; players Albertosi, Marini (Milan), Giordano, Manfredonia, Cacciatori, Wilson (Lazio) suspended",
+        "prob_home": 0.44,
+        "prob_draw": 0.27,
+        "prob_away": 0.29,
+        "spread_home": 0.058,
+        "spread_draw": 0.031,
+        "spread_away": 0.052,
+        "bookmaker_count": 3,   # Pre-internet era; Italian pools (Totocalcio) era
+        "notes": "Bribed by Alvaro Trinca's Totocalcio-based syndicate. Confirmed players: Enrico Albertosi and Giorgio Marini (Milan), Bruno Giordano, Lionello Manfredonia, Massimo Cacciatori, Giuseppe Wilson (Lazio). Criminal court acquitted all (no match-fixing law existed in 1980); FIGC tribunal sanctions enforced regardless. Paolo Rossi received 2-year ban for related Perugia incident.",
+    },
+
+    # ── Italian Calcioscommesse (2011-12) ─────────────────────────────────────
+    # Cremona prosecutor's investigation uncovered systematic fixing in Lega Pro.
+    # Most dramatic confirmed incident: players drugged at halftime.
+    {
+        "id": "calcioscom_001",
+        "match": "Cremonese vs Paganese",
+        "league": "Lega Pro Prima Divisione",
+        "season": "2010-11",
+        "year": 2010,
+        "confirmed_fixed": True,
+        "fix_type": "result",
+        "outcome": "draw",   # Fix: Cremonese players drugged at HT (winning 2-0) to sabotage result
+        "source": "Italian criminal investigation; doping tests confirmed sleeping drug administered; goalkeeper Marco Paoloni banned 5 years",
+        "prob_home": 0.42,
+        "prob_draw": 0.30,
+        "prob_away": 0.28,
+        "spread_home": 0.040,
+        "spread_draw": 0.019,
+        "spread_away": 0.034,
+        "bookmaker_count": 3,   # Lega Pro (Serie C) — limited bookmaker coverage
+        "notes": "Five Cremonese players administered sleeping drug at halftime (Cremonese were leading 2-0). Players suddenly fell ill in second half. Doping tests confirmed substance. Goalkeeper Paoloni suspected of administering drug to teammates to sabotage match for betting purposes. Unusual internal-sabotage fix type.",
+    },
+
+    # ── K-League Additional Confirmed Match (2011) ────────────────────────────
+    {
+        "id": "kleague_002",
+        "match": "Daejeon Citizen vs Pohang Steelers",
+        "league": "Korean League Cup",
+        "season": "2011",
+        "year": 2011,
+        "confirmed_fixed": True,
+        "fix_type": "result",
+        "outcome": "away_win",   # Daejeon lost 0-3; players bribed to lose
+        "source": "Criminal indictment; multiple Daejeon players convicted; lifetime bans imposed by Korean FA",
+        "prob_home": 0.32,   # Daejeon underdogs vs Pohang (strong side)
+        "prob_draw": 0.27,
+        "prob_away": 0.41,
+        "spread_home": 0.065,
+        "spread_draw": 0.031,
+        "spread_away": 0.059,
+        "bookmaker_count": 4,
+        "notes": "Daejeon players bribed to lose. Pohang player Kim Jung-kyum given 5-year ban for placing a bet on his own team after receiving a tip-off from a Daejeon player about the fix — a secondary consequence of the manipulation. Part of the wider 2011 K-League scandal (19 fixed matches in 2010 + 2 in 2011).",
     },
 ]
 
